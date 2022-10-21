@@ -1,0 +1,1 @@
+python train.py --workers 0 --device 0 --batch-size 4 --data data\wheat_pest.yaml --img 640 640 --cfg cfg\training\yolov7_wheat_pest.yaml --weights 'yolov7_training.pt' --name yolov7-pest
