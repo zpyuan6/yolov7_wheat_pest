@@ -6,7 +6,10 @@ from os.path import join
 import random
 from shutil import copyfile
 
-classes = ["pest"]
+classes = [str(i) for i in range(102)]
+print(classes)
+# classes = ["11121","11122"]
+# classes = ["pest"]
 # classes=["ball"]
 
 TRAIN_RATIO = 80
@@ -39,8 +42,8 @@ def convert(size, box):
 
 def convert_annotation(image_id):
     print(image_id)
-    in_file = open('F:\Aphid\pest_data\VOC2007\Annotations\%s.xml' % image_id, encoding='utf-8')
-    out_file = open('F:\Aphid\pest_data\VOC2007\YOLOLabels\%s.txt' % image_id, 'w')
+    in_file = open('F:\Aphid\ip102_v1.1\Detection\VOC2007\Annotations\%s.xml' % image_id, encoding='utf-8')
+    out_file = open('F:\Aphid\ip102_v1.1\Detection\VOC2007\YOLOLabels\%s.txt' % image_id, 'w')
     tree = ET.parse(in_file)
     root = tree.getroot()
     size = root.find('size')
@@ -49,10 +52,10 @@ def convert_annotation(image_id):
 
     for obj in root.iter('object'):
         # difficult = obj.find('difficult').text
-        # cls = obj.find('name').text
-        # if cls not in classes:
-        #     continue
-        cls = "pest"
+        cls = obj.find('name').text
+        if cls not in classes:
+            continue
+        # cls = "pest"
         cls_id = classes.index(cls)
         xmlbox = obj.find('bndbox')
         b = (float(xmlbox.find('xmin').text), float(xmlbox.find('xmax').text), float(xmlbox.find('ymin').text),
@@ -66,7 +69,7 @@ if __name__ == "__main__":
     wd = os.getcwd()
     wd = os.getcwd()
     # data_base_dir = os.path.join(wd, "VOCdevkit/")
-    data_base_dir = os.path.join("F:\Aphid\pest_data")
+    data_base_dir = os.path.join("F:\Aphid\ip102_v1.1\Detection")
     if not os.path.isdir(data_base_dir):
         os.mkdir(data_base_dir)
     work_sapce_dir = os.path.join(data_base_dir, "VOC2007/")
