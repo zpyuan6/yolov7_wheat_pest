@@ -1,0 +1,12 @@
+train: F:\\Hyperspecial\\pear_processed\\yolo_object_detection\\images\\train  # train images (relative to 'path') 128 images
+val:  F:\\Hyperspecial\\pear_processed\\yolo_object_detection\\images\\val  # val images (relative to 'path') 128 images
+
+# number of classes
+nc: 4
+
+# class names
+names: 
+  0: health
+  1: yellow
+  2: blue
+  3: dead

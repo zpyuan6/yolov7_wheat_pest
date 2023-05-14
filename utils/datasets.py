@@ -19,6 +19,7 @@ import torch.nn.functional as F
 from PIL import Image, ExifTags
 from torch.utils.data import Dataset
 from tqdm import tqdm
+from skimage import io
 
 import pickle
 from copy import deepcopy
@@ -386,6 +387,8 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         except Exception as e:
             raise Exception(f'{prefix}Error loading data from {path}: {e}\nSee {help_url}')
 
+        print("self.img_files len", len(self.img_files))
+
         # Check cache
         self.label_files = img2label_paths(self.img_files)  # labels
         cache_path = (p if p.is_file() else Path(self.label_files[0]).parent).with_suffix('.cache')  # cached labels
@@ -669,7 +672,11 @@ def load_image(self, index):
     img = self.imgs[index]
     if img is None:  # not cached
         path = self.img_files[index]
-        img = cv2.imread(path)  # BGR
+        img = None
+        if path.split(".")[-1] == "tiff" or path.split(".")[-1] == "tif":
+            img = io.imread(path)
+        else: 
+            img = cv2.imread(path)  # BGR
         assert img is not None, 'Image Not Found ' + path
         h0, w0 = img.shape[:2]  # orig hw
         r = self.img_size / max(h0, w0)  # resize image to img_size
@@ -982,7 +989,7 @@ def replicate(img, labels):
     return img, labels
 
 
-def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True, stride=32):
+def letterbox(img, new_shape=(640, 640), color=(0, 0, 0), auto=True, scaleFill=False, scaleup=True, stride=32):
     # Resize and pad image while meeting stride-multiple constraints
     shape = img.shape[:2]  # current shape [height, width]
     if isinstance(new_shape, int):

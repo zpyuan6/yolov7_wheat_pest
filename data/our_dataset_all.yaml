@@ -1,0 +1,15 @@
+train: F:\Pest\pest_data\YOLO_All_Classes_2023\images\train  # train images (relative to 'path') 128 images
+val:  F:\Pest\pest_data\YOLO_All_Classes_2023\images\val  # val images (relative to 'path') 128 images
+
+# number of classes
+nc: 7
+
+# class names
+names: 
+  0: pest
+  1: spider
+  2: fly
+  3: snail
+  4: aphid
+  5: slug
+  6: beetle
