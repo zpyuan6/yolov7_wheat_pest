@@ -69,7 +69,11 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=3):
 
 
 def plot_one_box_PIL(box, img, color=None, label=None, line_thickness=None):
+    if img.shape[-1]>3:
+        img = img[:,:,0:3]
+
     img = Image.fromarray(img)
+
     draw = ImageDraw.Draw(img)
     line_thickness = line_thickness or max(int(min(img.size) / 200), 2)
     draw.rectangle(box, width=line_thickness, outline=tuple(color))  # plot
@@ -112,6 +116,10 @@ def output_to_target(output):
 
 
 def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max_size=640, max_subplots=16):
+
+    if images.shape[1]>3:
+         images = images[:,0:3,:,:]
+
     # Plot image grid with labels
 
     if isinstance(images, torch.Tensor):
