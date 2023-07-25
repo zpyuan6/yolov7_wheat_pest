@@ -1,0 +1,9 @@
+train: F:\\nematoda\\Microorganism\\YOLO\\images\\train  # train images (relative to 'path') 128 images
+val:  F:\\nematoda\\Microorganism\\YOLO\\images\\val  # val images (relative to 'path') 128 images
+
+# number of classes
+nc: 1
+
+# class names
+names: 
+  0: Nematode
